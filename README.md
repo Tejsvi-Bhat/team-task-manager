@@ -14,7 +14,7 @@ A full-stack collaborative task management web application where users can creat
 ### Projects List
 ![Projects](screenshots/03-projects.png)
 
-### Kanban Board
+### Task Board
 ![Board](screenshots/04-board.png)
 
 ### Task Creation Modal
@@ -30,7 +30,7 @@ A full-stack collaborative task management web application where users can creat
 
 - **User Authentication** — Signup and login with JWT-based auth
 - **Project Management** — Create projects, add/remove members by email
-- **Kanban Board** — Tasks organized in To Do / In Progress / Done columns
+- **Task Board** — Tasks organized in To Do / In Progress / Done columns
 - **Task Management** — Create, edit, delete, and assign tasks with priority and due dates
 - **Dashboard** — Stats overview with total tasks, status breakdown, tasks per user, and overdue count
 - **Role-Based Access** — Admins manage everything; Members can only view and update their assigned tasks
