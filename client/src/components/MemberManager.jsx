@@ -33,41 +33,40 @@ export default function MemberManager({ projectId, members, onUpdate }) {
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-sm mb-6 border border-gray-100">
-      <h3 className="font-semibold text-gray-700 mb-3">Members</h3>
+    <div>
       <form onSubmit={handleAdd} className="flex gap-2 mb-3">
         <input
           type="email"
-          placeholder="Add member by email"
+          placeholder="Add member by email..."
           value={email}
           onChange={e => setEmail(e.target.value)}
-          className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+          className="flex-1 px-3 py-1.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           required
         />
         <button
           type="submit"
           disabled={loading}
-          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 disabled:opacity-50 text-sm"
+          className="bg-blue-600 text-white px-3 py-1.5 rounded-lg hover:bg-blue-700 disabled:opacity-50 text-xs font-medium transition-colors"
         >
           Add
         </button>
       </form>
-      <div className="space-y-2">
+      <div className="flex flex-wrap gap-2">
         {members.map(m => (
-          <div key={m.user.id} className="flex items-center justify-between text-sm">
-            <div>
-              <span className="text-gray-800">{m.user.name}</span>
-              <span className="text-gray-400 ml-2">{m.user.email}</span>
-              <span className={`ml-2 text-xs px-2 py-0.5 rounded-full ${m.role === 'ADMIN' ? 'bg-purple-100 text-purple-700' : 'bg-gray-100 text-gray-600'}`}>
-                {m.role}
-              </span>
+          <div key={m.user.id} className="flex items-center gap-2 bg-gray-50 rounded-lg px-2.5 py-1.5">
+            <div className="w-5 h-5 rounded-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
+              <span className="text-[9px] font-medium text-gray-600">{m.user.name.charAt(0)}</span>
             </div>
+            <span className="text-xs text-gray-700">{m.user.name}</span>
+            <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium ${m.role === 'ADMIN' ? 'bg-violet-100 text-violet-600' : 'bg-gray-100 text-gray-500'}`}>
+              {m.role}
+            </span>
             {m.role !== 'ADMIN' && (
               <button
                 onClick={() => handleRemove(m.user.id, m.user.name)}
-                className="text-red-500 hover:text-red-700 text-xs"
+                className="text-gray-300 hover:text-red-500 transition-colors ml-0.5"
               >
-                Remove
+                <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
               </button>
             )}
           </div>
