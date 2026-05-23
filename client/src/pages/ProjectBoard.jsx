@@ -183,7 +183,7 @@ export default function ProjectBoard() {
       {/* Board */}
       <div className="flex-1 overflow-x-auto overflow-y-hidden bg-gray-50 p-4">
         <DragDropContext onDragEnd={handleDragEnd}>
-          <div className="flex gap-4 h-full min-w-max">
+          <div className="flex gap-4 h-full min-w-max justify-center mx-auto">
             {COLUMNS.map(col => {
               const columnTasks = tasks.filter(t => t.status === col.key);
               return (
