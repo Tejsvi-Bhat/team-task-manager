@@ -8,10 +8,22 @@ import TaskModal from '../components/TaskModal';
 import MemberManager from '../components/MemberManager';
 
 const COLUMNS = [
-  { key: 'TODO', label: 'To Do', icon: '○', headerColor: 'text-gray-500', dotColor: 'bg-gray-400' },
-  { key: 'IN_PROGRESS', label: 'In Progress', icon: '◑', headerColor: 'text-blue-600', dotColor: 'bg-blue-500' },
-  { key: 'DONE', label: 'Done', icon: '●', headerColor: 'text-emerald-600', dotColor: 'bg-emerald-500' },
+  { key: 'TODO', label: 'To Do', headerColor: 'text-gray-500', dotColor: 'bg-gray-400', bg: 'bg-gray-100/70', dropBg: 'bg-gray-200/50' },
+  { key: 'IN_PROGRESS', label: 'In Progress', headerColor: 'text-amber-600', dotColor: 'bg-amber-400', bg: 'bg-amber-50/70', dropBg: 'bg-amber-100/50' },
+  { key: 'DONE', label: 'Done', headerColor: 'text-emerald-600', dotColor: 'bg-emerald-400', bg: 'bg-emerald-50/70', dropBg: 'bg-emerald-100/50' },
 ];
+
+const STATUS_BADGE = {
+  TODO: 'bg-gray-100 text-gray-500',
+  IN_PROGRESS: 'bg-amber-50 text-amber-600',
+  DONE: 'bg-emerald-50 text-emerald-600',
+};
+
+const STATUS_LABEL = {
+  TODO: 'To Do',
+  IN_PROGRESS: 'In Progress',
+  DONE: 'Done',
+};
 
 const PRIORITY_CONFIG = {
   LOW: { label: 'Low', color: 'bg-gray-100 text-gray-500' },
@@ -175,13 +187,13 @@ export default function ProjectBoard() {
             {COLUMNS.map(col => {
               const columnTasks = tasks.filter(t => t.status === col.key);
               return (
-                <div key={col.key} className="w-72 flex flex-col h-full">
+                <div key={col.key} className={`w-72 flex flex-col h-full ${col.bg} rounded-xl`}>
                   {/* Column header */}
-                  <div className="flex items-center justify-between px-2 pb-3">
+                  <div className="flex items-center justify-between px-3 pt-3 pb-2">
                     <div className="flex items-center gap-2">
                       <div className={`w-2 h-2 rounded-full ${col.dotColor}`} />
                       <span className={`text-xs font-semibold ${col.headerColor} uppercase tracking-wide`}>{col.label}</span>
-                      <span className="text-xs text-gray-300 font-medium">{columnTasks.length}</span>
+                      <span className="text-[10px] text-gray-400 bg-white/60 px-1.5 py-0.5 rounded-full font-medium">{columnTasks.length}</span>
                     </div>
                   </div>
 
@@ -191,7 +203,7 @@ export default function ProjectBoard() {
                       <div
                         ref={provided.innerRef}
                         {...provided.droppableProps}
-                        className={`flex-1 overflow-y-auto rounded-xl p-1.5 transition-colors ${snapshot.isDraggingOver ? 'bg-blue-50/60' : ''}`}
+                        className={`flex-1 overflow-y-auto rounded-b-xl px-2 pb-2 transition-colors ${snapshot.isDraggingOver ? col.dropBg : ''}`}
                       >
                         <div className="space-y-2">
                           {columnTasks.map((task, index) => (
@@ -205,11 +217,16 @@ export default function ProjectBoard() {
                                     snapshot.isDragging ? 'shadow-lg ring-2 ring-blue-200 rotate-[2deg]' : 'shadow-sm hover:shadow-md'
                                   } ${isOverdue(task) ? 'border-l-2 border-l-red-400' : ''}`}
                                 >
-                                  {/* Priority badge */}
+                                  {/* Priority & Status badges */}
                                   <div className="flex items-start justify-between gap-2">
-                                    <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded ${PRIORITY_CONFIG[task.priority].color}`}>
-                                      {PRIORITY_CONFIG[task.priority].label}
-                                    </span>
+                                    <div className="flex items-center gap-1">
+                                      <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded ${PRIORITY_CONFIG[task.priority].color}`}>
+                                        {PRIORITY_CONFIG[task.priority].label}
+                                      </span>
+                                      <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded ${STATUS_BADGE[task.status]}`}>
+                                        {STATUS_LABEL[task.status]}
+                                      </span>
+                                    </div>
                                     {isAdmin && (
                                       <div className="flex gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
                                         <button

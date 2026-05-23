@@ -22,25 +22,26 @@ function PrivateRoute({ children }) {
 export default function App() {
   const { user } = useAuth();
   const location = useLocation();
+  const isAuthPage = ['/login', '/signup'].includes(location.pathname);
   const isBoardPage = location.pathname.match(/^\/projects\/[^/]+$/);
+  const needsWrapper = !isAuthPage && !isBoardPage;
 
   return (
     <div className="min-h-screen bg-gray-50">
       {user && <Navbar />}
-      {isBoardPage && user ? (
-        <Routes>
-          <Route path="/projects/:id" element={<PrivateRoute><ProjectBoard /></PrivateRoute>} />
-        </Routes>
-      ) : (
+      {needsWrapper ? (
         <div className="max-w-7xl mx-auto px-4 py-6">
           <Routes>
-            <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
-            <Route path="/signup" element={user ? <Navigate to="/" /> : <Signup />} />
             <Route path="/" element={<PrivateRoute><Projects /></PrivateRoute>} />
-            <Route path="/projects/:id" element={<PrivateRoute><ProjectBoard /></PrivateRoute>} />
             <Route path="/projects/:id/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
           </Routes>
         </div>
+      ) : (
+        <Routes>
+          <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
+          <Route path="/signup" element={user ? <Navigate to="/" /> : <Signup />} />
+          <Route path="/projects/:id" element={<PrivateRoute><ProjectBoard /></PrivateRoute>} />
+        </Routes>
       )}
     </div>
   );
