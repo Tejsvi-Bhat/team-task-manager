@@ -17,7 +17,12 @@ A full-stack collaborative task management web application where users can creat
 ### Task Board
 ![Board](screenshots/04-board.png)
 
-### Task Creation Modal
+### Drag and Drop
+Tasks can be dragged between columns to update their status:
+
+![Drag and Drop](screenshots/drag-and-drop.gif)
+
+### Task Creation
 ![Task Modal](screenshots/06-task-modal.png)
 
 ### Member Management
